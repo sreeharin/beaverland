@@ -22,9 +22,20 @@ function create() {
     player = this.add.sprite(400, 300, 'player').setScale(.10);
 
     this.input.on('pointerdown', function (pointer) {
-        player.x = pointer.x;
-        player.y = pointer.y;
-    });
+        var distance = Phaser.Math.Distance.Between(player.x, player.y, pointer.x, pointer.y);
+
+        var speed = 200;
+
+        var duration = (distance / speed) * 1000; // Convert to milliseconds
+
+        this.tweens.add({
+            targets: player,
+            x: pointer.x,
+            y: pointer.y,
+            duration: duration,
+            ease: 'Linear'
+        });
+    }, this);
 }
 
 function update() {
